@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         showUploadTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ShowImagesActivity();
             }
         });
     }
@@ -147,5 +147,10 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "No File Selected", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void ShowImagesActivity() {
+        Intent intent = new Intent(this,ImageActivity.class);
+        startActivity(intent);
     }
 }
