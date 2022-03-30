@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
+    private StorageTask storageTask;
 
 
     @Override
@@ -66,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadFile();
+                if (storageTask != null && storageTask.isInProgress()){
+                    Toast.makeText(MainActivity.this, "Upload is in progress", Toast.LENGTH_SHORT).show();
+                }else {
+                    UploadFile();
+                }
             }
         });
 
@@ -105,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         if (imageUri != null){
             StorageReference fileStorageRef = storageReference.child(System.currentTimeMillis()
             +"."+getFileExtension(imageUri));
-
-            fileStorageRef.putFile(imageUri)
+            
+            storageTask = fileStorageRef.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -138,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
                             progressBar.setProgress((int) progress);
                         }
                     });
+        }else{
+            Toast.makeText(this, "No File Selected", Toast.LENGTH_SHORT).show();
         }
     }
 }
