@@ -125,10 +125,16 @@ public class MainActivity extends AppCompatActivity {
                             },1000);
 
                             Toast.makeText(MainActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                            Upload upload = new Upload(edtName.getText().toString().trim(),
-                                    taskSnapshot.getUploadSessionUri().toString());
-                            String uploadID = databaseReference.push().getKey();
-                            databaseReference.child(uploadID).setValue(upload);
+
+                            fileStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Upload upload = new Upload(edtName.getText().toString().trim(),
+                                            uri.toString());
+                                    String uploadID = databaseReference.push().getKey();
+                                    databaseReference.child(uploadID).setValue(upload);
+                                }
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -35,7 +35,7 @@ public class AdapterForRE extends RecyclerView.Adapter<AdapterForRE.ViewHolder> 
         Upload uploadCurrent = uploadList.get(position);
         holder.name.setText(uploadCurrent.getName());
         Picasso.get()
-                .load(uploadCurrent.getName())
+                .load(uploadCurrent.getImageURL())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()

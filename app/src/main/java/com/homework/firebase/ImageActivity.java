@@ -23,7 +23,7 @@ public class ImageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterForRE adapter;
     private DatabaseReference databaseReference;
-    private List<Upload> list;
+    private List<Upload> list = new ArrayList<>();
     private ProgressBar progressBar;
 
     @Override
@@ -36,8 +36,6 @@ public class ImageActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        list =  new ArrayList<>();
-
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -48,13 +46,13 @@ public class ImageActivity extends AppCompatActivity {
                 }
                 adapter = new AdapterForRE(ImageActivity.this,list);
                 recyclerView.setAdapter(adapter);
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ImageActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
