@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageActivity extends AppCompatActivity {
+public class ImageActivity extends AppCompatActivity implements AdapterForRE.Listener {
     private RecyclerView recyclerView;
     private AdapterForRE adapter;
     private DatabaseReference databaseReference;
@@ -45,6 +45,7 @@ public class ImageActivity extends AppCompatActivity {
                     list.add(upload);
                 }
                 adapter = new AdapterForRE(ImageActivity.this,list);
+                adapter.setListener(ImageActivity.this);
                 recyclerView.setAdapter(adapter);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -55,5 +56,20 @@ public class ImageActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        Toast.makeText(this, "Normal click on position: "+position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDoWhateverClicked(int position) {
+        Toast.makeText(this, "Do whatever click on position: "+position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteClicked(int position) {
+        Toast.makeText(this, "Delete click on position: "+position, Toast.LENGTH_SHORT).show();
     }
 }
