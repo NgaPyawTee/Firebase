@@ -3,6 +3,7 @@ package com.homework.firebase;
 public class Upload {
     private String name;
     private String imageURL;
+    private String key;
 
     public Upload(){
         //need empty constructor
@@ -24,4 +25,11 @@ public class Upload {
         return imageURL;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }
